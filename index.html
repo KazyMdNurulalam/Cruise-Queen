@@ -113,7 +113,7 @@
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="confirmationBtn" class="btn-style">Book Now</button>
         </div>
     </main>
 
@@ -160,6 +160,9 @@
             }
             return totalInputValue;
         };
+        document.getElementById("confirmationBtn").addEventListener("click", function(){
+            alert("Your ticket has been confirmed.")
+            });
     </script>
     <script src="https://kit.fontawesome.com/3ea3247d17.js" crossorigin="anonymous"></script>
     <!--Thank You-->
