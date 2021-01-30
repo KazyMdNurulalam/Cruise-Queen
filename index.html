@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curise Booking</title>
+    <title>Curies Booking</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -31,7 +35,9 @@
 
         <div class="booking-content">
             <h1>Cruise Queen</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book./p>
         </div>
 
 
@@ -39,7 +45,7 @@
             <h3>Book Ocean Time</h3>
             <div class="input-group">
                 <label for="">Flying From</label>
-                <input class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
             </div>
             <div class="input-group">
                 <label for="">Flying To</label>
@@ -48,30 +54,35 @@
             <div class="inputs">
                 <div class="input-group">
                     <label" for="">Departure</label>
-                    <input class="inp-style" type="date" name="">
+                        <input class="inp-style" type="date" name="">
                 </div>
                 <div class="input-group">
                     <label for="">Return</label>
                     <input class="inp-style" type="date" name="">
+
                 </div>
             </div>
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="fastClassInput" class="inp-style inp-width" type="text" value="0" name="">
                 </div>
                 <div class="plus-minus-btn">
-                    <p>+ -</p>
+                    <button onclick="toFixQuantity('fastClass' , true);" class="btn"><i
+                            class="fas fa-plus"></i></button>
+                    <button onclick="toFixQuantity('fastClass' , false)" class="btn"><i
+                            class="fas fa-minus"></i></button>
                 </div>
             </div>
-            
+
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <input id="economyInput" class="inp-style inp-width" type="text" value="0" name="">
                 </div>
                 <div class="plus-minus-btn">
-                    <p> <span>+</span> <span>-</span> </p>
+                    <button onclick="toFixQuantity('economy',true)" class="btn "><i class="fas fa-plus"></i></button>
+                    <button onclick="toFixQuantity('economy', false)" class="btn "><i class="fas fa-minus"></i></button>
                 </div>
             </div>
             <div class="calculations">
@@ -80,7 +91,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p id="totalAmount">$00</p>
                     </div>
                 </div>
 
@@ -89,7 +100,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p id="totalVat">$00</p>
                     </div>
                 </div>
                 <hr>
@@ -98,7 +109,7 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p id="totalCost">$00</p>
                     </div>
                 </div>
             </div>
@@ -106,6 +117,51 @@
         </div>
     </main>
 
+    <!-- javascript -->
+    <script>
+        function toFixQuantity(category, isIncrease) {
+            const categoryInput = document.getElementById(category + "Input");
+            const categoryQuantity = parseInt(categoryInput.value);
+            let categoryIncreaseQuantity = categoryQuantity;
+            if (isIncrease == true) {
+                categoryIncreaseQuantity = categoryQuantity + 1;
+            };
+            if (isIncrease == false && categoryQuantity > 0) {
+                categoryIncreaseQuantity = categoryQuantity - 1;
+            };
+            categoryInput.value = categoryIncreaseQuantity;
+
+            totalCost();
+        };
+
+        function totalCost() {
+            const totalFastClass = getInputValue("fastClass");
+            const totalEconomy = getInputValue("economy");
+
+            const totalAmount = totalFastClass + totalEconomy;
+            document.getElementById("totalAmount").innerText = "$" + totalAmount;
+
+            const vat = totalAmount * 0.1;
+            document.getElementById("totalVat").innerText = "$" + vat;
+
+            const totalCost = totalAmount + vat;
+            document.getElementById("totalCost").innerText = "$" + totalCost;
+        };
+
+        function getInputValue(category) {
+            const categoryInput = document.getElementById(category + "Input");
+            const categoryQuantity = parseInt(categoryInput.value);
+            let totalInputValue = categoryQuantity;
+            if (category == "fastClass") {
+                totalInputValue = categoryQuantity * 150;
+            }
+            if (category == "economy") {
+                totalInputValue = categoryQuantity * 100;
+            }
+            return totalInputValue;
+        };
+    </script>
+    <script src="https://kit.fontawesome.com/3ea3247d17.js" crossorigin="anonymous"></script>
     <!--Thank You-->
 </body>
 
